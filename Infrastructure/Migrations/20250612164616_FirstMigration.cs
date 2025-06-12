@@ -17,8 +17,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Telefono = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -33,7 +33,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Precio = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
@@ -48,9 +48,9 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Especialidad = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NumeroLicencia = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NumeroLicencia = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -64,23 +64,23 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Especie = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Especie = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Raza = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Edad = table.Column<int>(type: "int", nullable: false),
                     Peso = table.Column<double>(type: "float", nullable: false),
-                    Sexo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdDueño = table.Column<int>(type: "int", nullable: false)
+                    Sexo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DueñoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Mascotas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Mascotas_Dueños_IdDueño",
-                        column: x => x.IdDueño,
+                        name: "FK_Mascotas_Dueños_DueñoId",
+                        column: x => x.DueñoId,
                         principalTable: "Dueños",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,52 +90,52 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdMascota = table.Column<int>(type: "int", nullable: false),
-                    IdVeterinario = table.Column<int>(type: "int", nullable: false),
-                    IdServicio = table.Column<int>(type: "int", nullable: false)
+                    MascotaId = table.Column<int>(type: "int", nullable: false),
+                    VeterinarioId = table.Column<int>(type: "int", nullable: false),
+                    ServicioId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Citas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Citas_Mascotas_IdMascota",
-                        column: x => x.IdMascota,
+                        name: "FK_Citas_Mascotas_MascotaId",
+                        column: x => x.MascotaId,
                         principalTable: "Mascotas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Citas_Servicios_IdServicio",
-                        column: x => x.IdServicio,
+                        name: "FK_Citas_Servicios_ServicioId",
+                        column: x => x.ServicioId,
                         principalTable: "Servicios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Citas_Veterinarios_IdVeterinario",
-                        column: x => x.IdVeterinario,
+                        name: "FK_Citas_Veterinarios_VeterinarioId",
+                        column: x => x.VeterinarioId,
                         principalTable: "Veterinarios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Citas_IdMascota",
+                name: "IX_Citas_MascotaId",
                 table: "Citas",
-                column: "IdMascota");
+                column: "MascotaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Citas_IdServicio",
+                name: "IX_Citas_ServicioId",
                 table: "Citas",
-                column: "IdServicio");
+                column: "ServicioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Citas_IdVeterinario",
+                name: "IX_Citas_VeterinarioId",
                 table: "Citas",
-                column: "IdVeterinario");
+                column: "VeterinarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Mascotas_IdDueño",
+                name: "IX_Mascotas_DueñoId",
                 table: "Mascotas",
-                column: "IdDueño");
+                column: "DueñoId");
         }
 
         /// <inheritdoc />

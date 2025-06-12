@@ -33,22 +33,22 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdMascota")
+                    b.Property<int>("MascotaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdServicio")
+                    b.Property<int>("ServicioId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdVeterinario")
+                    b.Property<int>("VeterinarioId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdMascota");
+                    b.HasIndex("MascotaId");
 
-                    b.HasIndex("IdServicio");
+                    b.HasIndex("ServicioId");
 
-                    b.HasIndex("IdVeterinario");
+                    b.HasIndex("VeterinarioId");
 
                     b.ToTable("Citas");
                 });
@@ -68,11 +68,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefono")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -88,18 +86,16 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("DueñoId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Edad")
                         .HasColumnType("int");
 
                     b.Property<string>("Especie")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdDueño")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nombre")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Peso")
@@ -109,12 +105,11 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sexo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdDueño");
+                    b.HasIndex("DueñoId");
 
                     b.ToTable("Mascotas");
                 });
@@ -131,7 +126,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Precio")
@@ -154,11 +148,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NumeroLicencia")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefono")
@@ -171,40 +163,32 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Cita", b =>
                 {
-                    b.HasOne("Domain.Mascota", "Mascota")
+                    b.HasOne("Domain.Mascota", null)
                         .WithMany("Citas")
-                        .HasForeignKey("IdMascota")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("MascotaId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Servicio", "Servicio")
+                    b.HasOne("Domain.Servicio", null)
                         .WithMany("Citas")
-                        .HasForeignKey("IdServicio")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("ServicioId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Veterinario", "Veterinario")
+                    b.HasOne("Domain.Veterinario", null)
                         .WithMany("Citas")
-                        .HasForeignKey("IdVeterinario")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("VeterinarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Mascota");
-
-                    b.Navigation("Servicio");
-
-                    b.Navigation("Veterinario");
                 });
 
             modelBuilder.Entity("Domain.Mascota", b =>
                 {
-                    b.HasOne("Domain.Dueño", "Dueño")
+                    b.HasOne("Domain.Dueño", null)
                         .WithMany("Mascotas")
-                        .HasForeignKey("IdDueño")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("DueñoId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Dueño");
                 });
 
             modelBuilder.Entity("Domain.Dueño", b =>
