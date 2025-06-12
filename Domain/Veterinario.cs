@@ -10,9 +10,9 @@ namespace Domain
     public class Veterinario
     {
         public int Id { get; set; }
-        public required string Nombre { get; set; }
+        public string? Nombre { get; set; }
         public string? Especialidad { get; set; }
-        public required string NumeroLicencia { get; set; }
+        public string? NumeroLicencia { get; set; }
         public string? Telefono { get; set; }
 
         [JsonIgnore]

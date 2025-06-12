@@ -11,14 +11,8 @@ namespace Domain
     {
         public int Id { get; set; }
         public DateTime Fecha { get; set; }
-
-        public int IdMascota { get; set; }
-        public Mascota Mascota { get; set; } = null!;
-
-        public int IdVeterinario { get; set; }
-        public Veterinario Veterinario { get; set; } = null!;
-
-        public int IdServicio { get; set; }
-        public virtual Servicio Servicio { get; set; } = null!;
+        public int MascotaId { get; set; }
+        public int VeterinarioId { get; set; }
+        public int ServicioId { get; set; }
     }
 }
