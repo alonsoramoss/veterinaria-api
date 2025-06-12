@@ -20,30 +20,7 @@ namespace Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Mascota>()
-                .HasOne(c => c.Dueño)
-                .WithMany(m => m.Mascotas)
-                .HasForeignKey(c => c.IdDueño)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Cita>()
-                .HasOne(c => c.Mascota)
-                .WithMany(m => m.Citas)
-                .HasForeignKey(c => c.IdMascota)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Cita>()
-                .HasOne(c => c.Veterinario)
-                .WithMany(v => v.Citas)
-                .HasForeignKey(c => c.IdVeterinario)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Cita>()
-                .HasOne(c => c.Servicio)
-                .WithMany(s => s.Citas)
-                .HasForeignKey(c => c.IdServicio)
-                .OnDelete(DeleteBehavior.Restrict);
-
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
     }
